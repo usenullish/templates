@@ -1,0 +1,20 @@
+---
+import "../../styles/page.css";
+---
+
+<style>
+    article {
+        break-before: page;
+
+        --spacing: calc(100cqw / 210);
+        min-height: calc(100cqw * 297 / 210);
+
+        margin: 0 auto;
+
+        background: white;
+    }
+</style>
+
+<article class="relative flex h-full flex-col pt-15 pr-15 pl-20 font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-body leading-[1.4] text-neutral-900">
+    <slot />
+</article>

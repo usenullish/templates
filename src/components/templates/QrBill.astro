@@ -1,0 +1,9 @@
+---
+import Page from "./Page.astro";
+---
+
+[% if nullish.qrBill %]
+<Page>
+    <section class="absolute bottom-0 left-0 h-105 w-full [&_svg]:block [&_svg]:size-full">[[ nullish.qrBill | raw ]]</section>
+</Page>
+[% endif %]

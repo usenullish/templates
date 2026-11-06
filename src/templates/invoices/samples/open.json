@@ -1,0 +1,56 @@
+{
+  "$schema": "../schema.json",
+  "nullish": {
+    "organization": {
+      "name": "Example Ltd",
+      "careOf": null,
+      "address": "Sample Street 1",
+      "postalCode": "8000",
+      "city": "Zürich",
+      "country": {
+        "code": "CH",
+        "name": "Switzerland"
+      },
+      "email": "hello@example.com",
+      "phone": "+41000000000",
+      "website": "https://example.com",
+      "iban": "CH93 0076 2011 6238 5295 7"
+    },
+    "client": {
+      "name": "Client Inc",
+      "careOf": "Jane Doe",
+      "address": "Demo Road 2",
+      "postalCode": "3000",
+      "city": "Bern",
+      "country": {
+        "code": "CH",
+        "name": "Switzerland"
+      }
+    },
+    "invoice": {
+      "number": "42",
+      "issueOn": "01.10.2026",
+      "dueOn": "31.10.2026",
+      "currency": "CHF",
+      "subtotal": "CHF 950.00",
+      "vat": "CHF 76.95",
+      "vatRate": "8.1 %",
+      "total": "CHF 1'026.95",
+      "status": "open"
+    },
+    "lines": [
+      {
+        "type": "item",
+        "description": "Consulting",
+        "quantity": "8",
+        "unitPrice": "CHF 125.00"
+      },
+      {
+        "type": "discount",
+        "description": "Loyalty discount",
+        "quantity": "1",
+        "unitPrice": "CHF 50.00"
+      }
+    ]
+  }
+}

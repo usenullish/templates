@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+import { ChevronDown, FileText, PanelLeft } from "@lucide/astro";
+import ThemePicker from "@components/app/ThemePicker.astro";
+import LanguagePicker from "@components/app/LanguagePicker.astro";
+import Preview from "@components/app/Preview.astro";
+import TemplatesNav from "@components/app/TemplatesNav.astro";
+import SidebarToggler from "@components/app/SidebarToggler.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>nullish templates</title>
+
+    <script is:inline>
+      try {
+        const darkTheme = localStorage.theme === "dark" ||
+            (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+        document.documentElement.setAttribute("data-theme", darkTheme ? "dark" : "light");
+      } catch {}
+
+      try {
+        document.documentElement.dataset.sidebar = localStorage.sidebar === "collapsed" ? "collapsed" : "expanded";
+      } catch {}
+    </script>
+  </head>
+
+  <body class="h-screen overflow-hidden bg-white text-neutral-950 antialiased dark:bg-neutral-950 dark:text-neutral-50">
+    <div
+      class="grid h-full grid-cols-[14rem_1fr] grid-rows-[3.5rem_1fr] transition-[grid-template-columns] duration-200 ease-linear sidebar-collapsed:grid-cols-[3rem_1fr]"
+    >
+      <header
+        class="col-start-2 row-start-1 flex items-center justify-between px-4"
+      >
+        <SidebarToggler />
+
+        <div class="flex items-center gap-2">
+          <LanguagePicker />
+
+          <ThemePicker />
+        </div>
+      </header>
+
+      <nav
+        id="sidebar"
+        class="col-start-1 row-span-2 row-start-1 overflow-hidden border-r border-neutral-200 bg-neutral-50 dark:border-white/10 dark:bg-neutral-900"
+      >
+        <div class="flex h-14 items-center px-4">
+          <span class="truncate text-sm font-semibold sidebar-collapsed:hidden">nullish</span>
+        </div>
+
+        <TemplatesNav />
+      </nav>
+
+      <main class="col-start-2 row-start-2 min-h-0 overflow-auto p-8">
+        <Preview />
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,86 @@
+---
+import {FileText} from "@lucide/astro";
+
+const TEMPLATES = [
+    {
+        id: "invoices",
+        label: "Invoices",
+        icon: FileText,
+        samples: [
+            { sample: "open", label: "Open" },
+            { sample: "draft", label: "Draft" }
+        ],
+    }
+];
+
+const currentTemplate = Astro.url.searchParams.get("template") ?? TEMPLATES[0].id;
+const currentSample = Astro.url.searchParams.get("sample") ?? "open";
+---
+
+<div class="p-2">
+    <p class="truncate px-2 pb-2 text-xs font-medium text-neutral-500 sidebar-collapsed:hidden dark:text-neutral-400">
+        Templates
+    </p>
+    <ul class="space-y-1" id="templates">
+        {
+            TEMPLATES.map(({ id, label, icon: Icon, samples }) => (
+                    <li>
+                        <span
+                                class="flex h-8 w-full items-center gap-2 overflow-hidden p-2 text-left text-sm"
+                        >
+                            <Icon class="size-4 shrink-0" />
+                            <span class="truncate sidebar-collapsed:hidden">{label}</span>
+                        </span>
+
+                        <ul class="mx-3.5 mt-1 space-y-1 border-l border-neutral-200 px-2.5 sidebar-collapsed:hidden dark:border-white/10">
+                            {
+                                samples.map(({sample, label}) => (
+                                        <li>
+                                            <a
+                                                    aria-current={id === currentTemplate && sample === currentSample ? "page" : undefined}
+                                                    data-template={id}
+                                                    data-sample={sample}
+                                                    class="flex h-7 w-full items-center truncate px-2 text-left text-sm text-neutral-600 hover:bg-neutral-100 aria-[current=page]:bg-neutral-100 aria-[current=page]:font-medium aria-[current=page]:text-neutral-950 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:aria-[current=page]:bg-neutral-800 dark:aria-[current=page]:text-neutral-50"
+                                            >
+                                                {label}
+                                            </a>
+                                        </li>
+                                ))
+                            }
+                        </ul>
+                    </li>
+            ))
+        }
+    </ul>
+</div>
+
+<script>
+    const initNavigation = () => {
+        const {location: {origin, search}} = window;
+
+        const urlParams = new URLSearchParams(search);
+        urlParams.delete("template");
+        urlParams.delete("sample");
+
+        const links = document.querySelectorAll<HTMLLinkElement>("#templates > li > ul > li > a")
+
+        links.forEach(link => {
+            const template = link.getAttribute("data-template");
+
+            if (template === null) {
+                console.log("Unexpected: no data-template attribute found for link.", link);
+                return;
+            }
+
+            const sample = link.getAttribute("data-sample");
+            const rest = urlParams.toString();
+
+            link.setAttribute("href", `${origin}/?template=${template}${sample !== null ? `&sample=${sample}` : ""}${rest !== "" ? `&${rest}` : ""}`)
+        })
+    }
+
+    document.addEventListener("DOMContentLoaded", initNavigation);
+
+    document.addEventListener("nullish:reload", initNavigation);
+    window.addEventListener("popstate", initNavigation);
+</script>

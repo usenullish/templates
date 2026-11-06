@@ -1,0 +1,44 @@
+{
+  "$schema": "../schema.json",
+  "nullish": {
+    "organization": {
+      "name": "Example Ltd",
+      "careOf": null,
+      "address": null,
+      "postalCode": null,
+      "city": null,
+      "country": null,
+      "email": null,
+      "phone": null,
+      "website": null,
+      "iban": null
+    },
+    "client": {
+      "name": "Client Inc",
+      "careOf": null,
+      "address": null,
+      "postalCode": null,
+      "city": null,
+      "country": null
+    },
+    "invoice": {
+      "number": null,
+      "issueOn": "01.10.2026",
+      "dueOn": null,
+      "currency": "CHF",
+      "subtotal": "CHF 1'000.00",
+      "vat": null,
+      "vatRate": null,
+      "total": "CHF 1'000.00",
+      "status": "draft"
+    },
+    "lines": [
+      {
+        "type": "item",
+        "description": "Consulting",
+        "quantity": "8",
+        "unitPrice": "CHF 125.00"
+      }
+    ]
+  }
+}

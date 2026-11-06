@@ -1,0 +1,302 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "nullish": {
+      "type": "object",
+      "properties": {
+        "organization": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the organization issuing the invoice"
+            },
+            "careOf": {
+              "description": "Care of line, e.g. c/o Jane Doe",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "address": {
+              "description": "Street and number only, e.g. Sihlquai 131. The postal code, city and country have their own fields.",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "postalCode": {
+              "description": "Postal code, e.g. 8005",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 16
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "city": {
+              "description": "City, e.g. Zürich",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "email": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "phone": {
+              "description": "Phone number in E.164 format, e.g. +41791234567",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "e164",
+                  "pattern": "^\\+[1-9]\\d{6,14}$"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "website": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "uri"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "country": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "maxLength": 2,
+                      "description": "ISO 3166-1 alpha-2 code of the country, e.g. CH"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the country in the language of the document"
+                    }
+                  },
+                  "required": ["code", "name"],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "iban": {
+              "description": "IBAN of the bank account chosen for the invoice, formatted in groups of four, null without bank account",
+              "type": ["string", "null"]
+            }
+          },
+          "required": ["name", "country", "iban"],
+          "additionalProperties": false
+        },
+        "client": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Name of the client the invoice is issued to"
+            },
+            "careOf": {
+              "description": "Care of line, e.g. c/o Jane Doe",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "address": {
+              "description": "Street and number only, e.g. Sihlquai 131. The postal code, city and country have their own fields.",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "postalCode": {
+              "description": "Postal code, e.g. 8005",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 16
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "city": {
+              "description": "City, e.g. Zürich",
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "country": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "maxLength": 2,
+                      "description": "ISO 3166-1 alpha-2 code of the country, e.g. CH"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the country in the language of the document"
+                    }
+                  },
+                  "required": ["code", "name"],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": ["name", "country"],
+          "additionalProperties": false
+        },
+        "invoice": {
+          "type": "object",
+          "properties": {
+            "number": {
+              "description": "Number of the invoice, null for a draft",
+              "type": ["string", "null"]
+            },
+            "status": {
+              "type": "string",
+              "enum": ["draft", "open", "paid", "uncollectible", "void"],
+              "description": "Status of the invoice: draft, open, paid, uncollectible or void"
+            },
+            "issueOn": {
+              "type": "string",
+              "description": "Issue date, formatted in the language of the document"
+            },
+            "dueOn": {
+              "description": "Due date, formatted in the language of the document",
+              "type": ["string", "null"]
+            },
+            "currency": {
+              "type": "string",
+              "maxLength": 20
+            },
+            "subtotal": {
+              "type": "string",
+              "description": "Total of the lines without VAT, formatted with its currency"
+            },
+            "vat": {
+              "description": "VAT, formatted with its currency, null without VAT rate",
+              "type": ["string", "null"]
+            },
+            "vatRate": {
+              "description": "VAT rate in percent, e.g. 8.1 %, null without VAT rate",
+              "type": ["string", "null"]
+            },
+            "total": {
+              "type": "string",
+              "description": "Total including VAT, formatted with its currency"
+            }
+          },
+          "required": [
+            "number",
+            "status",
+            "issueOn",
+            "dueOn",
+            "currency",
+            "subtotal",
+            "vat",
+            "vatRate",
+            "total"
+          ],
+          "additionalProperties": false
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["item", "discount"]
+              },
+              "description": {
+                "type": "string"
+              },
+              "quantity": {
+                "type": "string",
+                "description": "Quantity, formatted in the language of the document"
+              },
+              "unitPrice": {
+                "type": "string",
+                "description": "Unit price, formatted with its currency"
+              }
+            },
+            "required": ["type", "description", "quantity", "unitPrice"],
+            "additionalProperties": false
+          }
+        },
+        "qrBill": {
+          "description": "SVG of the QR-bill payment part, to insert unescaped with [[ nullish.qrBill | raw ]]. Absent for a draft or without bank account.",
+          "type": "string"
+        }
+      },
+      "required": ["organization", "client", "invoice", "lines"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["nullish"],
+  "additionalProperties": false
+}

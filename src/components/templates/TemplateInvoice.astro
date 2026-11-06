@@ -1,0 +1,16 @@
+---
+import Invoice from '@templates/invoices/Invoice.astro'
+import i18n from "@templates/invoices/i18n.json";
+import Template from "@components/templates/Template.astro";
+import type {Language} from "../../constants";
+
+interface Props {
+    lang: Language;
+}
+
+const { lang } = Astro.props;
+---
+
+<Template lang={lang} title={i18n.title[lang]}>
+    <Invoice lang={lang} />
+</Template>

@@ -1,0 +1,86 @@
+{
+  "title": {
+    "en": "Invoice",
+    "fr": "Facture",
+    "de": "Rechnung",
+    "it": "Fattura"
+  },
+  "issueOn": {
+    "en": "Invoice date",
+    "fr": "Date de la facture",
+    "de": "Rechnungsdatum",
+    "it": "Data della fattura"
+  },
+  "dueOn": {
+    "en": "Due date",
+    "fr": "Échéance",
+    "de": "Fällig am",
+    "it": "Scadenza"
+  },
+  "salutation": {
+    "en": "Dear Sir or Madam",
+    "fr": "Madame, Monsieur",
+    "de": "Sehr geehrte Damen und Herren",
+    "it": "Gentili Signore e Signori"
+  },
+  "intro": {
+    "en": "We hereby invoice you as follows:",
+    "fr": "Nous nous permettons de vous facturer comme suit :",
+    "de": "Wir erlauben uns, Ihnen wie folgt in Rechnung zu stellen:",
+    "it": "Ci permettiamo di fatturarvi quanto segue:"
+  },
+  "description": {
+    "en": "Description",
+    "fr": "Désignation",
+    "de": "Beschreibung",
+    "it": "Descrizione"
+  },
+  "quantity": {
+    "en": "Quantity",
+    "fr": "Quantité",
+    "de": "Menge",
+    "it": "Quantità"
+  },
+  "unitPrice": {
+    "en": "Unit price",
+    "fr": "Prix unitaire",
+    "de": "Einzelpreis",
+    "it": "Prezzo unitario"
+  },
+  "subtotal": {
+    "en": "Subtotal",
+    "fr": "Sous-total",
+    "de": "Zwischentotal",
+    "it": "Subtotale"
+  },
+  "vat": {
+    "en": "VAT",
+    "fr": "TVA",
+    "de": "MWST",
+    "it": "IVA"
+  },
+  "total": {
+    "en": "Total",
+    "fr": "Total",
+    "de": "Total",
+    "it": "Totale"
+  },
+  "questions": {
+    "en": "If you have any questions, please do not hesitate to contact us.",
+    "fr": "Nous restons à votre disposition pour toute question.",
+    "de": "Bei Fragen stehen wir Ihnen gerne zur Verfügung.",
+    "it": "Restiamo a vostra disposizione per qualsiasi domanda."
+  },
+  "closing": {
+    "en": "Kind regards",
+    "fr": "Meilleures salutations",
+    "de": "Freundliche Grüsse",
+    "it": "Cordiali saluti"
+  },
+  "draft": {
+    "en": "Draft",
+    "fr": "Brouillon",
+    "de": "Entwurf",
+    "it": "Bozza"
+  }
+}

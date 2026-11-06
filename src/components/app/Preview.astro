@@ -1,0 +1,37 @@
+<div
+        class="mx-auto w-[70vw] border border-neutral-200 bg-white shadow-lg dark:border-white/10 dark:bg-neutral-900"
+>
+    <iframe id="template" title="Template preview" class="block aspect-210/297 w-full border-0 supports-[frame-sizing:content-height]:aspect-auto" style="frame-sizing: content-height;"></iframe>
+</div>
+
+<script>
+    import {DEFAULT_LANGUAGE} from "../../constants";
+
+    const renderTemplate = () => {
+        const iframe = document.querySelector<HTMLIFrameElement>("#template");
+
+        if (iframe === null) {
+            console.error("Unexpected: No iframe to show the template?");
+            return;
+        }
+
+        const {location: {search, origin}} = window;
+        const urlParams = new URLSearchParams(search);
+        const lang = urlParams.get("lang") ?? DEFAULT_LANGUAGE;
+        const template = urlParams.get("template") ?? "invoices";
+        const sample = urlParams.get("sample") ?? "open";
+
+        const url = `${origin}/${lang}/${template}?sample=${sample}`;
+
+        if (iframe.contentWindow === null) {
+            iframe.src = url;
+        } else {
+            iframe.contentWindow.location.replace(url);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", renderTemplate);
+
+    document.addEventListener("nullish:reload", renderTemplate);
+    window.addEventListener("popstate", renderTemplate);
+</script>

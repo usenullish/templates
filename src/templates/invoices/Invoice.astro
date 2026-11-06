@@ -1,0 +1,106 @@
+---
+import i18n from "./i18n.json";
+
+interface Props {
+    lang: "en" | "fr" | "de" | "it";
+}
+
+const { lang } = Astro.props;
+
+const t = (key: keyof typeof i18n): string => i18n[key][lang];
+---
+
+<header>
+    <p class="text-heading font-bold tracking-[-0.01em]">[[ nullish.organization.name ]]</p>
+</header>
+
+<address class="absolute top-50 right-15 w-77 text-large not-italic">
+    <p class="mb-2 truncate border-b-[0.5pt] border-neutral-900 pb-0.5 text-fine">
+        [[ nullish.organization.name ]][% if nullish.organization.careOf %], c/o [[ nullish.organization.careOf ]][% endif %][% if nullish.organization.address %], [[ nullish.organization.address ]][% endif %][% if nullish.organization.postalCode or nullish.organization.city %],[% if nullish.organization.postalCode %] [[ nullish.organization.postalCode ]][% endif %][% if nullish.organization.city %] [[ nullish.organization.city ]][% endif %][% endif %][% if nullish.organization.country and nullish.organization.country.code != nullish.client.country.code %], [[ nullish.organization.country.name ]][% endif %]
+    </p>
+    [[ nullish.client.name ]]
+    [% if nullish.client.careOf %]<br />c/o [[ nullish.client.careOf ]][% endif %]
+    [% if nullish.client.address %]<br />[[ nullish.client.address ]][% endif %]
+    [% if nullish.client.postalCode or nullish.client.city %]<br />[% if nullish.client.postalCode %][[ nullish.client.postalCode ]] [% endif %][% if nullish.client.city %][[ nullish.client.city ]][% endif %][% endif %]
+    [% if nullish.client.country and nullish.client.country.code != nullish.organization.country.code %]<br />[[ nullish.client.country.name ]][% endif %]
+</address>
+
+<main class="pt-78">
+    <h1 class="mb-2 text-title font-bold">{t("title")}[% if nullish.invoice.number %] [[ nullish.invoice.number ]][% endif %]</h1>
+
+    <dl class="mb-16 grid grid-cols-[--spacing(30)_auto] gap-y-0.5">
+        <dt class="text-neutral-500">{t("issueOn")}</dt>
+        <dd>[[ nullish.invoice.issueOn ]]</dd>
+        [% if nullish.invoice.dueOn %]
+        <dt class="text-neutral-500">{t("dueOn")}</dt>
+        <dd>[[ nullish.invoice.dueOn ]]</dd>
+        [% endif %]
+    </dl>
+
+    <div class="mb-6">
+        <p>{t("salutation")}</p>
+        <p class="mt-4">{t("intro")}</p>
+    </div>
+
+    <table class="w-full tabular-nums">
+        <thead>
+        <tr>
+            <th class="border-b-[0.75pt] border-neutral-900 py-1.5 pr-2 text-left font-bold">{t("description")}</th>
+            <th class="border-b-[0.75pt] border-neutral-900 px-2 py-1.5 text-right font-bold whitespace-nowrap">{t("quantity")}</th>
+            <th class="border-b-[0.75pt] border-neutral-900 py-1.5 pl-2 text-right font-bold whitespace-nowrap">{t("unitPrice")}</th>
+        </tr>
+        </thead>
+        <tbody>
+        [% for line in nullish.lines %]
+        <tr>
+            <td class="border-b-[0.5pt] border-neutral-300 py-2 pr-2 align-top">[[ line.description ]]</td>
+            <td class="border-b-[0.5pt] border-neutral-300 p-2 text-right align-top whitespace-nowrap">[[ line.quantity ]]</td>
+            <td class="border-b-[0.5pt] border-neutral-300 py-2 pl-2 text-right align-top whitespace-nowrap">[% if line.type == "discount" %]−[% endif %][[ line.unitPrice ]]</td>
+        </tr>
+        [% endfor %]
+        </tbody>
+    </table>
+
+    <table class="mt-4 ml-auto w-75 tabular-nums">
+        <tbody>
+        <tr>
+            <td class="py-1">{t("subtotal")}</td>
+            <td class="py-1 text-right whitespace-nowrap">[[ nullish.invoice.subtotal ]]</td>
+        </tr>
+        [% if nullish.invoice.vat %]
+        <tr>
+            <td class="py-1">{t("vat")} [[ nullish.invoice.vatRate ]]</td>
+            <td class="py-1 text-right whitespace-nowrap">[[ nullish.invoice.vat ]]</td>
+        </tr>
+        [% endif %]
+        <tr class="text-large font-bold">
+            <td class="border-t-[0.75pt] border-b-[2pt] border-neutral-900 [border-bottom-style:double] pt-2 pb-1">{t("total")}</td>
+            <td class="border-t-[0.75pt] border-b-[2pt] border-neutral-900 [border-bottom-style:double] pt-2 pb-1 text-right whitespace-nowrap">[[ nullish.invoice.total ]]</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-14 mb-10">
+        <p>{t("questions")}</p>
+        <p class="mt-4">{t("closing")}</p>
+    </div>
+</main>
+
+<footer class="mt-auto pt-10 pb-10 text-center text-small text-neutral-500">
+    <address class="not-italic">
+        <strong>[[ nullish.organization.name ]]</strong>
+        [% if nullish.organization.careOf %] · c/o [[ nullish.organization.careOf ]][% endif %]
+        [% if nullish.organization.address %] · [[ nullish.organization.address ]][% endif %]
+        [% if nullish.organization.postalCode or nullish.organization.city %] ·[% if nullish.organization.postalCode %] [[ nullish.organization.postalCode ]][% endif %][% if nullish.organization.city %] [[ nullish.organization.city ]][% endif %][% endif %]
+        [% if nullish.organization.iban %] · [[ nullish.organization.iban ]][% endif %]
+        [% if nullish.organization.phone %] · [[ nullish.organization.phone ]][% endif %]
+        [% if nullish.organization.email %] · [[ nullish.organization.email ]][% endif %]
+        [% if nullish.organization.website %] · [[ nullish.organization.website ]][% endif %]
+    </address>
+</footer>
+
+[% if nullish.invoice.status == "draft" %]
+<div class="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden select-none" aria-hidden="true">
+    <p class="-rotate-45 text-[length:--spacing(30)] font-bold tracking-widest text-neutral-900/10 uppercase">{t("draft")}</p>
+</div>
+[% endif %]

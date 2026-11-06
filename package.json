@@ -1,0 +1,35 @@
+{
+  "name": "@usenullish/templates",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "astro": "astro",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "e2e": "NODE_ENV=development playwright test",
+    "e2e:ci": "playwright test --reporter=html",
+    "e2e:snapshots": "playwright test --update-snapshots --reporter=list",
+    "e2e:snapshots:local": "NODE_ENV=development playwright test --update-snapshots --reporter=list",
+    "e2e:report": "playwright show-report",
+    "e2e:playwright:install": "playwright install chromium --with-deps"
+  },
+  "devDependencies": {
+    "@lucide/astro": "^1.68.0",
+    "@playwright/test": "^1.64.1",
+    "@tailwindcss/vite": "^4.3.4",
+    "@types/node": "^26.6.6",
+    "astro": "^7.4.5",
+    "liquidjs": "^10.30.1",
+    "oxfmt": "^0.76.0",
+    "oxlint": "^1.91.0",
+    "tailwindcss": "^4.3.4"
+  },
+  "engines": {
+    "node": ">=24",
+    "npm": ">=11.10.0"
+  }
+}

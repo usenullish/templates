@@ -1,0 +1,64 @@
+---
+import {PanelLeft} from "@lucide/astro";
+---
+
+<button
+        type="button"
+        id="sidebar-trigger"
+        aria-label="Toggle sidebar"
+        aria-controls="sidebar"
+        aria-expanded="true"
+        title="Toggle sidebar (⌘B)"
+        class="inline-flex size-8 items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800"
+>
+    <PanelLeft class="size-4" />
+</button>
+
+<script>
+    const setSidebar = ({collapse}: {collapse: boolean}) => {
+        document.documentElement.dataset.sidebar = collapse ? "collapsed" : "expanded";
+
+        const sidebarTrigger = document.querySelector<HTMLButtonElement>("#sidebar-trigger");
+        sidebarTrigger?.setAttribute("aria-expanded", String(!collapse));
+
+        try {
+            localStorage.setItem("sidebar", collapse ? "collapsed" : "expanded");
+        } catch (err: unknown) {
+            console.error("Unexpected: Cannot save the sidebar state in the local storage.", err);
+        }
+    };
+
+    const toggleSidebar = () => {
+        const collapsed = document.documentElement.dataset.sidebar === "collapsed";
+        setSidebar({collapse: !collapsed});
+    }
+
+    const initSidebarToggler = () => {
+        const sidebarTrigger = document.querySelector<HTMLButtonElement>("#sidebar-trigger");
+
+        if (sidebarTrigger === null) {
+            console.error("Unexpected: no slide bar toggle found.");
+            return;
+        }
+
+        sidebarTrigger.addEventListener("click", toggleSidebar);
+    }
+
+    const initSidebarKeyboardToggler = ($event: KeyboardEvent) => {
+        if ($event.key === "b" && ($event.metaKey || $event.ctrlKey)) {
+            $event.preventDefault();
+            toggleSidebar();
+        }
+    }
+
+    const initSidebar = () => {
+        const collapsed = document.documentElement.dataset.sidebar === "collapsed";
+
+        setSidebar({collapse: collapsed});
+    }
+
+    document.addEventListener("DOMContentLoaded", initSidebarToggler);
+    document.addEventListener("DOMContentLoaded", initSidebar);
+
+    document.addEventListener("keydown", initSidebarKeyboardToggler);
+</script>

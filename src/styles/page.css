@@ -1,0 +1,14 @@
+/* https://tailwindcss.com/docs/detecting-classes-in-source-files#disabling-automatic-detection */
+@import "tailwindcss" source(none);
+
+@source "../templates";
+@source "../components/templates";
+
+@theme inline {
+  --text-fine: calc(var(--spacing) * 2.293);
+  --text-small: calc(var(--spacing) * 2.646);
+  --text-body: calc(var(--spacing) * 3.175);
+  --text-large: calc(var(--spacing) * 3.528);
+  --text-heading: calc(var(--spacing) * 4.939);
+  --text-title: calc(var(--spacing) * 5.644);
+}

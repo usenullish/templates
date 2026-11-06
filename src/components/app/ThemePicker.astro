@@ -1,0 +1,52 @@
+---
+import { Moon, Sun } from "@lucide/astro";
+---
+
+<button
+        type="button"
+        id="theme"
+        aria-label="Toggle dark mode"
+        class="inline-flex size-8 items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800"
+>
+    <Moon class="size-4 dark:hidden" />
+    <Sun class="hidden size-4 dark:block" />
+</button>
+
+<script>
+    enum Theme {
+        Light = 'light',
+        Dark = 'dark',
+    }
+
+    const currentTheme = (): Theme => {
+        const darkMode = localStorage.theme === Theme.Dark ||
+            (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        return darkMode ? Theme.Dark : Theme.Light;
+    }
+
+    const toggleTheme = () => {
+        const theme = currentTheme();
+        const newTheme = theme === Theme.Dark ? Theme.Light : Theme.Dark;
+
+        document.documentElement.setAttribute("data-theme", newTheme);
+
+        try {
+            localStorage.setItem("theme", newTheme);
+        } catch (err: unknown) {
+            console.error("Unexpected: Cannot save the theme in the local storage.", err);
+        }
+    }
+
+    const initThemeToggler = () => {
+        const btn = document.querySelector("#theme");
+
+        if (btn === null) {
+            console.error("Unexpected: No theme toggle button?")
+            return;
+        }
+
+        btn.addEventListener("click", toggleTheme);
+    }
+
+    document.addEventListener("DOMContentLoaded", initThemeToggler);
+</script>

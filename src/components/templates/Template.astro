@@ -1,0 +1,43 @@
+---
+import Page from "@components/templates/Page.astro";
+import QrBill from "@components/templates/QrBill.astro";
+import type {Language} from "../../constants";
+
+interface Props {
+    lang: Language;
+    title: string;
+}
+
+const { lang, title } = Astro.props;
+---
+
+<html lang={lang}>
+<head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+
+    <style is:global>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media screen {
+            body {
+                margin: 0;
+                container-type: inline-size;
+            }
+        }
+    </style>
+
+    {/* Chrome only: https://developer.chrome.com/blog/responsive-iframes */}
+    {import.meta.env.DEV && <meta name="responsive-embedded-sizing" content="allow-origins=*" />}
+</head>
+<body>
+<Page>
+    <slot />
+</Page>
+
+<QrBill />
+</body>
+</html>
