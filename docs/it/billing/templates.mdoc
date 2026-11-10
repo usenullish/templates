@@ -1,0 +1,77 @@
+---
+title: Modelli di fattura
+description: Fatture che ti somigliano, disegnate con l'IA o a mano.
+---
+
+nullish ha già un modello predefinito, sobrio, in inglese, tedesco, francese e italiano. Se vuoi fatture che ti somiglino, disegnane uno tuo: la pagina è tutta tua, non solo un logo e una riga di testo.
+
+I modelli nascono nel progetto [nullish templates](https://github.com/usenullish/templates), che mostra la tua fattura in anteprima live con dati di esempio: ogni modifica la vedi subito. Il lavoro puoi lasciarlo all'IA o farlo tu.
+
+## Scaricare il progetto
+
+{% steps %}
+
+1. Fai un fork di [usenullish/templates](https://github.com/usenullish/templates) su GitHub se vuoi tenere i modelli in un repository tuo, poi clonalo:
+
+   ```sh
+   git clone https://github.com/usenullish/templates.git
+   cd templates
+   npm install
+   ```
+
+2. Avvia l'anteprima e apri [localhost:4321](http://localhost:4321):
+
+   ```sh
+   npm run dev
+   ```
+
+{% /steps %}
+
+## Farlo disegnare all'IA
+
+Apri il progetto in un assistente di programmazione come Claude Code, Cursor o Copilot e spiegagli cosa vuoi:
+
+- "Usa il mio logo da `logo.svg` nell'angolo in alto a sinistra e il colore del nostro marchio `#1d4ed8` per i titoli."
+- "Metti il nostro indirizzo nel piè di pagina e le coordinate bancarie accanto ai totali."
+- "Fallo somigliare di più a questo PDF" (con una vecchia fattura allegata).
+
+Il progetto descrive ogni dato della fattura, quindi l'assistente sa cosa ha a disposizione. Tieni l'anteprima aperta lì accanto e chiedi ritocchi finché il risultato non ti piace.
+
+## Oppure fallo tu
+
+Il modello di fattura sta in `src/templates/invoices/`:
+
+- `Invoice.astro` è il layout: cosa appare sulla pagina, e dove.
+- `i18n.json` contiene i testi in inglese, francese, tedesco e italiano.
+
+Lo stile lo definisci con CSS semplice o con le classi Tailwind. Le misure sono in millimetri, come sulla carta. Nel [README del progetto](https://github.com/usenullish/templates#readme) trovi tutti i dati della fattura e la sintassi dei modelli.
+
+{% aside %}
+nullish salva solo l'HTML, quindi il modello non può caricare niente da fuori. Incorpora il logo
+come SVG o come URI `data:`, e lo stesso vale per un font personalizzato.
+{% /aside %}
+
+## Caricarlo su nullish
+
+{% steps %}
+
+1. Compila il modello:
+
+   ```sh
+   npm run build
+   ```
+
+   Ti ritrovi un file per lingua in `templates/invoices/`: `en.html`, `fr.html`, `de.html` e `it.html`.
+
+2. In nullish vai su **Impostazioni → Fatturazione → Modelli di documento** e crea un modello. Dagli un **Nome**.
+
+3. Scegli **Aggiungi un contenuto** per ogni lingua in cui fatturi: seleziona la **Lingua** e carica il file corrispondente, per esempio `it.html` per l'italiano.
+
+{% /steps %}
+
+Quando generi il PDF di una fattura, scegli il tuo modello sotto **Modello di documento**. Puoi averne più di uno, per esempio uno per marchio.
+
+{% aside type="tip" %}
+Basta un errore di battitura nei dati usati dal modello e il PDF non si genera: così te ne accorgi subito. Controlla
+nell'anteprima prima di caricarlo.
+{% /aside %}
